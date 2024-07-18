@@ -3,9 +3,8 @@ public abstract class Account {
     protected double balance;
     private int uniqueID;
 
-    public Account(double APR, int uniqueID) {
+    protected Account(double APR, int uniqueID) {
         this.APR = APR;
-        this.balance = balance;
         this.uniqueID = uniqueID;
     }
 
