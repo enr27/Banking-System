@@ -1,11 +1,17 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class BankTest {
 
+    private static final String ID1 = "12345678";
+    private static final String ID2 = "87654321";
+    private static final double APR1 = 2.5;
+    private static final double APR2 = 3.5;
+
+    Account account;
     Bank bank;
 
     @BeforeEach
@@ -15,81 +21,110 @@ public class BankTest {
 
     @Test
     public void bank_is_created_with_no_accounts() {
-        bank = new Bank();
-
-        assertTrue(Bank.getAccount().isEmpty());
+        assertTrue(bank.getAccounts().isEmpty());
     }
 
     @Test
     public void add_one_account_to_bank() {
-        bank.addAccount(new Checking(4.2, 12345678));
-
-        int actual = bank.getAccount().size();
-
-        assertEquals(1, actual);
+        account = new Checking(ID1, APR1);
+        bank.addAccount(account);
+        assertEquals(1, bank.getAccounts().size());
     }
 
     @Test
     public void add_two_accounts_to_bank() {
-        bank.addAccount(new Checking(4.2, 12345678));
-        bank.addAccount(new Savings(6.2, 87654321));
-
-        int actual = bank.getAccount().size();
-
-        assertEquals(2, actual);
+        account = new Checking(ID1, APR1);
+        Account account2 = new Savings(ID2, APR2);
+        bank.addAccount(account);
+        bank.addAccount(account2);
+        assertEquals(2, bank.getAccounts().size());
     }
 
     @Test
-    public void retrieve_one_account_from_bank_and_the_correct_account_is_retrieved() {
-        Checking checkingAccount = new Checking(4.2, 11223344);
-        bank.addAccount(checkingAccount);
-
-        Account accountRetrieved = bank.getAccount(11223344);
-
-        assertEquals(checkingAccount, accountRetrieved);
+    public void deposit_into_checking_account_by_id_through_bank() {
+        account = new Checking(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(1000, ID1);
+        assertEquals(1000, account.getBalance());
     }
 
     @Test
-    public void deposit_money_by_id_through_bank_and_the_correct_account_gets_the_money() {
-        bank.addAccount(new Checking(4.2, 19283746));
-        bank.deposit(19283746, 1000);
-
-        Account accountRetrieved = bank.getAccount(19283746);
-
-        assertEquals(1000, accountRetrieved.getBalance());
+    public void withdraw_from_checking_account_by_id_through_bank() {
+        account = new Checking(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(600, ID1);
+        bank.withdrawMoneyByID(100, ID1);
+        assertEquals(500, account.getBalance());
     }
 
     @Test
-    public void withdraw_money_by_id_through_bank_and_the_correct_account_loses_the_money() {
-        bank.addAccount(new Checking(4.2, 19283746));
-        bank.deposit(19283746, 500);
-        bank.withdraw(19283746, 400);
-
-        Account accountRetrieved = bank.getAccount(19283746);
-
-        assertEquals(100, accountRetrieved.getBalance());
+    public void deposit_into_savings_account_by_id_through_bank() {
+        account = new Savings(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(800, ID1);
+        assertEquals(800, account.getBalance());
     }
 
     @Test
-    public void deposit_twice_through_bank() {
-        bank.addAccount(new Checking(4.2, 19283746));
-        bank.deposit(19283746, 100.25);
-        bank.deposit(19283746, 101.24);
-
-        Account accountRetrieved = bank.getAccount(19283746);
-
-        assertEquals(201.49, accountRetrieved.getBalance());
+    public void withdraw_from_savings_account_by_id_through_bank() {
+        account = new Savings(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(700, ID1);
+        bank.withdrawMoneyByID(200, ID1);
+        assertEquals(500, account.getBalance());
     }
 
     @Test
-    public void withdraw_twice_through_bank() {
-        bank.addAccount(new Checking(4.2, 19283746));
-        bank.deposit(19283746, 2000);
-        bank.withdraw(19283746, 500.25);
-        bank.withdraw(19283746, 400.24);
+    public void deposit_into_multiple_accounts_at_once() {
+        account = new Checking(ID1, APR1);
+        Account account2 = new Savings(ID2, APR2);
+        bank.addAccount(account);
+        bank.addAccount(account2);
+        bank.depositMoneyByID(75, ID1);
+        bank.depositMoneyByID(25, ID2);
+        assertEquals(75, account.getBalance());
+        assertEquals(25, account2.getBalance());
+    }
 
-        Account accountRetrieved = bank.getAccount(19283746);
+    @Test
+    public void withdraw_from_multiple_accounts_at_once() {
+        account = new Checking(ID1, APR1);
+        Account account2 = new Savings(ID2, APR2);
+        bank.addAccount(account);
+        bank.addAccount(account2);
+        bank.depositMoneyByID(500, ID1);
+        bank.depositMoneyByID(300, ID2);
+        bank.withdrawMoneyByID(400, ID1);
+        bank.withdrawMoneyByID(300, ID2);
+        assertEquals(100, account.getBalance());
+        assertEquals(0, account2.getBalance());
+    }
 
-        assertEquals(1099.51, accountRetrieved.getBalance());
+    @Test
+    public void deposit_multiple_times_into_same_account() {
+        account = new Checking(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(1000, ID1);
+        bank.depositMoneyByID(1000, ID1);
+        assertEquals(2000, account.getBalance());
+    }
+
+    @Test
+    public void withdraw_multiple_times_into_same_account() {
+        account = new Checking(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(5000, ID1);
+        bank.withdrawMoneyByID(50.5, ID1);
+        bank.withdrawMoneyByID(49.5, ID1);
+        assertEquals(4900, account.getBalance());
+    }
+
+    @Test
+    public void account_returns_0_when_withdrawing_higher_amount_than_balance() {
+        account = new Savings(ID1, APR1);
+        bank.addAccount(account);
+        bank.depositMoneyByID(50, ID1);
+        bank.withdrawMoneyByID(100, ID1);
+        assertEquals(0, account.getBalance());
     }
 }

@@ -1,13 +1,13 @@
 public class CD extends Account {
-    private double balance;
 
-    public CD(double APR, int uniqueID, double balance) {
-        super(APR, uniqueID);
-        this.balance = balance;
+    public CD(String id, double apr, double cdStartingBalance) {
+        super.id = id;
+        super.apr = apr;
+        super.balance = cdStartingBalance;
     }
 
     @Override
-    public double getBalance() {
-        return balance;
+    public String getAccountType() {
+        return "CD";
     }
 }

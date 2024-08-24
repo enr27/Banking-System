@@ -1,41 +1,30 @@
 public abstract class Account {
-    private double APR;
+    protected String id;
+    protected double apr;
     protected double balance;
-    private int uniqueID;
+    abstract public String getAccountType();
 
-    protected Account(double APR, int uniqueID) {
-        this.APR = APR;
-        this.uniqueID = uniqueID;
+    public String getID() {
+        return id;
     }
 
     public double getAPR() {
-        return APR;
-    }
-
-    public int getUniqueID() {
-        return uniqueID;
+        return apr;
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public void depositBalance(double addToBalance) {
-        if (addToBalance >= 0) {
-            balance += addToBalance;
-        } else {
-            System.out.print("You can only deposit a positive amount");
-        }
+    public void deposit(double amountDeposited) {
+        balance += amountDeposited;
     }
 
-    public void withdrawBalance(double subtractFromBalance) {
-        if (subtractFromBalance >= 0) {
-            balance -= subtractFromBalance;
-            if (balance < 0) {
-                balance = 0;
-            }
+    public void withdraw(double amountWithdrawn) {
+        if (amountWithdrawn <= balance) {
+            balance -= amountWithdrawn;
         } else {
-            System.out.println("You can only withdraw a positive amount");
+            balance = 0;
         }
     }
 }

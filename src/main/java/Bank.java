@@ -2,31 +2,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
-    private static Map<Integer, Account> accounts;
+    private Map<String, Object> accounts;
 
-    Bank() {
+    public Bank() {
         accounts = new HashMap<>();
     }
 
-    public static Map<Integer, Account> getAccount() {
+    public Map<String, Object> getAccounts() {
         return accounts;
     }
 
     public void addAccount(Account account) {
-        accounts.put(account.getUniqueID(), account);
+        accounts.put(account.getID(), account);
     }
 
-    public Account getAccount(int uniqueID) {
-        return accounts.get(uniqueID);
+    public Account getAccountByID(String retrievedID) {
+        return (Account) accounts.get(retrievedID);
     }
 
-    public void deposit(int uniqueID, double addMoney) {
-        Account account = getAccount(uniqueID);
-        account.depositBalance(addMoney);
+    public void depositMoneyByID(double amount, String id) {
+        Account account = getAccountByID(id);
+        account.deposit(amount);
     }
 
-    public void withdraw(int uniqueID, double subtractMoney) {
-        Account account = getAccount(uniqueID);
-        account.withdrawBalance(subtractMoney);
+    public void withdrawMoneyByID(double amount, String id) {
+        Account account = getAccountByID(id);
+        account.withdraw(amount);
     }
 }

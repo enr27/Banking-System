@@ -1,32 +1,31 @@
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class CDTest {
+    private static final String ID = "12345678";
+    private static final double APR = 6.5;
+    private static final double BALANCE = 5000;
 
-    private static final double APR = 6.2;
-    private static final int UNIQUE_ID = 12345678;
-    private static final double BALANCE = 5000.25;
-
-    CD cd;
+    CD account;
 
     @BeforeEach
     public void setUp() {
-        cd = new CD(APR, UNIQUE_ID, BALANCE);
+        account = new CD(ID, APR, BALANCE);
     }
 
     @Test
     public void cd_specified_balance() {
-        double actual = cd.getBalance();
+        double actual = account.getBalance();
 
-        assertEquals(5000.25, actual);
+        assertEquals(BALANCE, actual);
     }
 
     @Test
     public void cd_apr_value() {
-        double actual = cd.getAPR();
+        double actual = account.getAPR();
 
-        assertEquals(6.2, actual);
+        assertEquals(APR, actual);
     }
 }

@@ -1,6 +1,13 @@
 public class Savings extends Account {
 
-    public Savings(double APR, int uniqueID) {
-        super(APR, uniqueID);
+    public Savings(String id, double apr) {
+        super.id = id;
+        super.apr = apr;
+        super.balance = 0;
+    }
+
+    @Override
+    public String getAccountType() {
+        return "Savings";
     }
 }
