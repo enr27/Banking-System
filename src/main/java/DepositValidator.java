@@ -13,18 +13,13 @@ public class DepositValidator extends CommandValidator {
         String[] arguments = command.split("\\s+");
 
         if (arguments.length == 3) {
-            return createDepositCommand(arguments);
+            return validateDepositCommand(arguments);
         } else {
             return false;
         }
     }
 
-    private boolean createDepositCommand(String[] arguments) {
-
-        Account account = getBank().getAccountByID(arguments[1]);
-        if (account.getAccountType().equalsIgnoreCase("cd")) {
-            return false;
-        }
+    private boolean validateDepositCommand(String[] arguments) {
 
         if (!arguments[0].equalsIgnoreCase("deposit")) {
             return false;
@@ -35,6 +30,11 @@ public class DepositValidator extends CommandValidator {
         }
 
         if (getBank().getAccounts().isEmpty() || !getBank().getAccounts().containsKey(arguments[1])) {
+            return false;
+        }
+
+        Account account = getBank().getAccountByID(arguments[1]);
+        if (account.getAccountType().equalsIgnoreCase("cd")) {
             return false;
         }
 
