@@ -27,4 +27,9 @@ public abstract class Account {
             balance = 0;
         }
     }
+
+    public String getAccountInfo() {
+        String info = String.format("%s %s %.2f %.2f", getAccountType(), getID(), getBalance(), getAPR());
+        return info;
+    }
 }
