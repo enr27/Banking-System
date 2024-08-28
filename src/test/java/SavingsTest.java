@@ -28,3 +28,4 @@ public class SavingsTest {
         assertEquals(APR, actual);
     }
 }
+

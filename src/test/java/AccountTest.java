@@ -29,3 +29,4 @@ public class AccountTest {
         assertEquals(BALANCE, account.getBalance());
     }
 }
+

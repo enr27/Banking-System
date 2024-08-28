@@ -12,14 +12,14 @@ public class CreateValidator extends CommandValidator {
         String[] arguments = command.split(" ");
 
         if (arguments.length == 4) {
-            return createCheckingOrSavingsAccount(arguments);
+            return validateCheckingOrSavingsAccount(arguments);
         } else if (arguments.length == 5) {
-            return createCDAccount(arguments);
+            return validateCDAccount(arguments);
         }
         return false;
     }
 
-    private boolean createCheckingOrSavingsAccount(String[] arguments) {
+    private boolean validateCheckingOrSavingsAccount(String[] arguments) {
         if (arguments[0].equalsIgnoreCase("create")
                 && (arguments[1].equalsIgnoreCase("checking") || arguments[1].equalsIgnoreCase("savings"))) {
             return validate(arguments[2], arguments[3], null);
@@ -27,7 +27,7 @@ public class CreateValidator extends CommandValidator {
         return false;
     }
 
-    private boolean createCDAccount(String[] arguments) {
+    private boolean validateCDAccount(String[] arguments) {
         if (arguments[0].equalsIgnoreCase("create") && arguments[1].equalsIgnoreCase("cd")) {
             return validate(arguments[2], arguments[3], arguments[4]);
         }

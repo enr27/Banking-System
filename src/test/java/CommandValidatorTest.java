@@ -49,4 +49,3 @@ public class CommandValidatorTest {
         assertFalse(commandValidator.validate(command));
     }
 }
-
