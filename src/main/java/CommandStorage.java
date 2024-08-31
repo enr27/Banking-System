@@ -24,6 +24,7 @@ public class CommandStorage {
         for (String accountID : bank.getAccounts().keySet()) {
             Account account = bank.getAccountByID(accountID);
             output.add(account.getAccountInfo());
+            output.addAll(account.getAccountHistory());
         }
         output.addAll(invalidCommands);
         return output;

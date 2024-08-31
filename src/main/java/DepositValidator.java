@@ -37,7 +37,6 @@ public class DepositValidator extends CommandValidator {
         if (account.getAccountType().equalsIgnoreCase("cd")) {
             return false;
         }
-
         double amount = Double.parseDouble(arguments[2]);
         if (validDepositAmount(account, amount)) {
             return true;
@@ -49,7 +48,7 @@ public class DepositValidator extends CommandValidator {
         switch (account.getAccountType().toLowerCase()) {
             case "checking":
             case "savings":
-                return (amount >= 0 && amount <= 10000);
+                return (amount >= 0 && amount <= 2500);
             default:
                 return false;
         }

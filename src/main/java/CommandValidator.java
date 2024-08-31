@@ -3,6 +3,9 @@ public class CommandValidator {
     private final Bank bank;
     CreateValidator createValidator;
     DepositValidator depositValidator;
+    WithdrawValidator withdrawValidator;
+    TransferValidator transferValidator;
+    PassTimeValidator passTimeValidator;
 
     public CommandValidator(Bank bank) {
         this.bank = bank;
@@ -20,8 +23,12 @@ public class CommandValidator {
 
         createValidator = new CreateValidator(bank);
         depositValidator = new DepositValidator(bank);
+        withdrawValidator = new WithdrawValidator(bank);
+        transferValidator = new TransferValidator(bank);
+        passTimeValidator = new PassTimeValidator(bank);
 
-        return createValidator.validate(command) ||
-                depositValidator.validate(command);
+        return createValidator.validate(command) || depositValidator.validate(command)
+                || withdrawValidator.validate(command) || transferValidator.validate(command)
+                || passTimeValidator.validate(command);
     }
 }

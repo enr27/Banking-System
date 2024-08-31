@@ -33,9 +33,9 @@ public class DepositValidatorTest {
     }
 
     @Test
-    public void depositing_more_than_10000_dollars_into_checking_account_returns_false() {
+    public void depositing_more_than_2500_dollars_into_checking_account_returns_false() {
         bank.addAccount(checking);
-        String command = "deposit 12345678 10100";
+        String command = "deposit 12345678 2510";
         assertFalse(depositValidator.validate(command));
     }
 
@@ -47,9 +47,9 @@ public class DepositValidatorTest {
     }
 
     @Test
-    public void depositing_more_than_10000_dollars_into_savings_account_returns_false() {
+    public void depositing_more_than_2500_dollars_into_savings_account_returns_false() {
         bank.addAccount(savings);
-        String command = "deposit 11223344 10200";
+        String command = "deposit 11223344 10000";
         assertFalse(depositValidator.validate(command));
     }
 

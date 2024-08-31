@@ -40,6 +40,6 @@ public class CreateProcessorTest {
         Account account = bank.getAccountByID("12345678");
         assertEquals("12345678", account.getID());
         assertEquals(6.5, account.getAPR());
-        assertEquals("CD", account.getAccountType());
+        assertEquals("Cd", account.getAccountType());
     }
 }

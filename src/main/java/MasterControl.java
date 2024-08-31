@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class MasterControl {
-    private CommandValidator commandValidator;
-    private CommandProcessor commandProcessor;
-    private CommandStorage commandStorage;
+    private final CommandValidator commandValidator;
+    private final CommandProcessor commandProcessor;
+    private final CommandStorage commandStorage;
 
     public MasterControl(CommandValidator commandValidator,
                          CommandProcessor commandProcessor, CommandStorage commandStorage) {
@@ -12,15 +13,20 @@ public class MasterControl {
         this.commandStorage = commandStorage;
     }
 
-    public List<String> start(List<String> input) {
-        for (String command : input) {
+    public ArrayList<String> start(List<String> input) {
+        List<String> copyInput = new ArrayList<>(input);
+        for (String command : copyInput) {
             if (commandValidator.validate(command)) {
                 commandProcessor.process(command);
             } else {
                 commandStorage.addInvalidCommand(command);
             }
         }
-        return commandStorage.getInvalidCommands();
+        return getOutput();
+    }
+
+    private ArrayList getOutput() {
+        return commandStorage.getOutput();
     }
 }
 
