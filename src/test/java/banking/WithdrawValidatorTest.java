@@ -126,4 +126,44 @@ public class WithdrawValidatorTest {
         String command = "withdraw 11111111 2000";
         assertTrue(withdrawValidator.validate(command));
     }
+
+    @Test
+    public void withdrawing_more_than_balance_of_cd_account_returns_true() {
+        bank.addAccount(cd);
+        cd.setAge(12);
+        String command = "withdraw 11111111 9000";
+        assertTrue(withdrawValidator.validate(command));
+    }
+
+    @Test
+    public void withdrawing_0_from_checking_account_returns_true() {
+        bank.addAccount(checking);
+        bank.depositMoneyByID(200, "12345678");
+        String command = "withdraw 12345678 0";
+        assertTrue(withdrawValidator.validate(command));
+    }
+
+    @Test
+    public void withdrawing_between_0_and_1000_in_checking_account_returns_true() {
+        bank.addAccount(checking);
+        bank.depositMoneyByID(200, "12345678");
+        String command = "withdraw 12345678 100";
+        assertTrue(withdrawValidator.validate(command));
+    }
+
+    @Test
+    public void withdrawing_0_from_savings_account_returns_true() {
+        bank.addAccount(savings);
+        bank.depositMoneyByID(200, "11223344");
+        String command = "withdraw 11223344 0";
+        assertTrue(withdrawValidator.validate(command));
+    }
+
+    @Test
+    public void withdrawing_between_0_and_1000_in_savings_account_returns_true() {
+        bank.addAccount(savings);
+        bank.depositMoneyByID(200, "11223344");
+        String command = "withdraw 11223344 100";
+        assertTrue(withdrawValidator.validate(command));
+    }
 }

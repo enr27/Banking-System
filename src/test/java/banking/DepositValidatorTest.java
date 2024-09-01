@@ -68,4 +68,46 @@ public class DepositValidatorTest {
         String command = "DEPOSIt 12345678 100";
         assertTrue(depositValidator.validate(command));
     }
+
+    @Test
+    public void depositing_0_into_checking_account_returns_true() {
+        bank.addAccount(checking);
+        String command = "deposit 12345678 0";
+        assertTrue(depositValidator.validate(command));
+    }
+
+    @Test
+    public void depositing_between_0_and_2500_into_checking_account_returns_true() {
+        bank.addAccount(checking);
+        String command = "deposit 12345678 500";
+        assertTrue(depositValidator.validate(command));
+    }
+
+    @Test
+    public void depositing_2500_into_checking_account_returns_true() {
+        bank.addAccount(checking);
+        String command = "deposit 12345678 2500";
+        assertTrue(depositValidator.validate(command));
+    }
+
+    @Test
+    public void depositing_0_into_savings_account_returns_true() {
+        bank.addAccount(savings);
+        String command = "deposit 11223344 0";
+        assertTrue(depositValidator.validate(command));
+    }
+
+    @Test
+    public void depositing_between_0_and_2500_into_savings_account_returns_true() {
+        bank.addAccount(savings);
+        String command = "deposit 11223344 500";
+        assertTrue(depositValidator.validate(command));
+    }
+
+    @Test
+    public void depositing_2500_into_savings_account_returns_true() {
+        bank.addAccount(savings);
+        String command = "deposit 11223344 2500";
+        assertTrue(depositValidator.validate(command));
+    }
 }

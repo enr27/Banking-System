@@ -54,7 +54,7 @@ public class WithdrawValidator extends CommandValidator {
         switch (account.getAccountType().toLowerCase()) {
             case "savings":
             case "checking":
-                return ((amount >= 0 && amount <= 1000));
+                return (amount >= 0 && amount <= 1000);
             case "cd":
                 return (amount >= account.getBalance());
             default:

@@ -70,4 +70,10 @@ public class CreateValidatorTest {
         String command = "CREATE CHECKING 12345678 2.5";
         assertTrue(createValidator.validate(command));
     }
+
+    @Test
+    public void creating_cd_returns_true() {
+        String command = "create cd 11110000 6.5 5000";
+        assertTrue(createValidator.validate(command));
+    }
 }
